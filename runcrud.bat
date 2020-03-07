@@ -30,4 +30,4 @@ echo There were errors
 
 :end
 echo.
-echo Work is finished.
+echo Work is finished
