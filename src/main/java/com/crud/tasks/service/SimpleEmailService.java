@@ -37,9 +37,6 @@ public class SimpleEmailService {
         if(mail.getToCc() != null) {
             mailMessage.setCc(mail.getToCc());
             LOGGER.info("E-mail created for 2 recipient");
-        } else {
-            mailMessage.setCc((String) null);
-            LOGGER.info("E-mail created for 1 recipient");
         }
 
         return mailMessage;
