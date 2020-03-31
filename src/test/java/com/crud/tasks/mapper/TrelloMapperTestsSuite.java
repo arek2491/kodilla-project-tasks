@@ -19,7 +19,7 @@ public class TrelloMapperTestsSuite {
     TrelloMapper trelloMapper;
 
     @Test
-    public void testMapToBoards() throws NullPointerException {
+    public void testMapToBoards() {
         List<TrelloBoardDto> testTrelloBoardDto = new ArrayList<>();
         List<TrelloListDto> testTrelloListDto = new ArrayList<>();
         testTrelloListDto.add(new TrelloListDto("1", "testList", false));
