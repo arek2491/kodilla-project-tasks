@@ -17,10 +17,19 @@ public class EmailSheduler {
     private SimpleEmailService simpleEmailService;
 
     @Autowired
-    private TaskRepository taskrepository;
+    private TaskRepository taskRepository;
 
     @Autowired
     private AdminConfig adminConfig;
+
+    @Scheduled(cron = "0 0 10 * * *")
+    public void sendInformationEmail() {
+        long size = taskRepository.count();
+        simpleEmailService.send(new Mail(
+                adminConfig.getAdminMail(),
+                SUBJECT,
+                message(size)));
+    }
 
     private String message(long tempSize) {
         String messageIntroduction = "Currently in database you got: ";
@@ -29,15 +38,6 @@ public class EmailSheduler {
         } else {
             return messageIntroduction + tempSize + " tasks";
         }
-    }
-
-    @Scheduled(/*cron = "0 0 10 * * *"*/ fixedDelay = 10000)
-    public void sendInformationEmail() {
-        long size = taskrepository.count();
-        simpleEmailService.send(new Mail(
-                adminConfig.getAdminMail(),
-                SUBJECT,
-                message(size)));
     }
 
 
