@@ -5,13 +5,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.boot.test.context.SpringBootTest;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
 
-@SpringBootTest
+
 @RunWith(MockitoJUnitRunner.class)
 public class TrelloMapperTestsSuite {
 
@@ -27,6 +26,7 @@ public class TrelloMapperTestsSuite {
 
         List<TrelloBoard> testList = trelloMapper.mapToBoards(testTrelloBoardDto);
 
+        assertNotNull(testList);
         assertEquals("1", testList.get(0).getId());
         assertEquals("testBoard", testList.get(0).getName());
         assertEquals("1", testList.get(0).getLists().get(0).getId());
@@ -34,6 +34,26 @@ public class TrelloMapperTestsSuite {
         assertFalse(testList.get(0).getLists().get(0).isClosed());
         assertEquals(1, testList.size());
         testList.removeAll(testList);
+    }
+
+    @Test
+    public void testMapToBoardsWithTrelloListIsEmpty() {
+        List<TrelloBoardDto> testTrelloBoardDto = new ArrayList<>();
+        List<TrelloListDto> testTrelloListDto = new ArrayList<>();
+        testTrelloBoardDto.add(new TrelloBoardDto("1", "testBoard", testTrelloListDto));
+        List<TrelloBoard> testList = trelloMapper.mapToBoards(testTrelloBoardDto);
+        assertNotNull(testList);
+        assertEquals(1, testList.size());
+        assertTrue(testList.get(0).getLists().isEmpty());
+    }
+
+    @Test
+    public void testMapToBoardsWithTrelloBoardsIsEmpty() {
+        List<TrelloBoardDto> testTrelloBoardDto = new ArrayList<>();
+        List<TrelloBoard> testList = trelloMapper.mapToBoards(testTrelloBoardDto);
+
+        assertNotNull(testList);
+        assertTrue(testList.isEmpty());
     }
 
     @Test
@@ -45,6 +65,7 @@ public class TrelloMapperTestsSuite {
 
         List<TrelloBoardDto> testList = trelloMapper.mapToBoardsDto(testTrelloBoard);
 
+        assertNotNull(testList);
         assertEquals("1", testList.get(0).getId());
         assertEquals("testBoard", testList.get(0).getName());
         assertEquals("1", testList.get(0).getLists().get(0).getId());
@@ -55,16 +76,48 @@ public class TrelloMapperTestsSuite {
     }
 
     @Test
+    public void testMapToBoardsDtoWhenTrelloListIsEmpty() {
+        List<TrelloList> testTrelloList = new ArrayList<>();
+        List<TrelloBoard> testTrelloBoard = new ArrayList<>();
+        testTrelloBoard.add(new TrelloBoard("1", "testBoard", testTrelloList));
+
+        List<TrelloBoardDto> testList = trelloMapper.mapToBoardsDto(testTrelloBoard);
+
+        assertNotNull(testList);
+        assertEquals(1, testList.size());
+        assertTrue(testList.get(0).getLists().isEmpty());
+    }
+
+    @Test
+    public void testMapToBoardDtoWhenTrelloBoardsIsEmpty() {
+        List<TrelloBoard> testTrelloBoard = new ArrayList<>();
+        List<TrelloBoardDto> testList = trelloMapper.mapToBoardsDto(testTrelloBoard);
+
+        assertNotNull(testList);
+        assertTrue(testList.isEmpty());
+    }
+
+    @Test
     public void testMapToList() {
         List<TrelloListDto> testTrelloListDto = new ArrayList<>();
         testTrelloListDto.add(new TrelloListDto("1", "testList", false));
 
         List<TrelloList> testList = trelloMapper.mapToList(testTrelloListDto);
 
+        assertNotNull(testList);
         assertEquals("1", testList.get(0).getId());
         assertEquals("testList", testList.get(0).getName());
         assertFalse(testList.get(0).isClosed());
         testList.removeAll(testList);
+    }
+
+    @Test
+    public void testMapToListWhenTrelloListDtoIsEmpty() {
+        List<TrelloListDto> testTrelloListDto = new ArrayList<>();
+        List<TrelloList> testList = trelloMapper.mapToList(testTrelloListDto);
+
+        assertNotNull(testList);
+        assertTrue(testList.isEmpty());
     }
 
     @Test
@@ -74,9 +127,19 @@ public class TrelloMapperTestsSuite {
 
         List<TrelloListDto> testList = trelloMapper.mapToListDto(testTrelloList);
 
+        assertNotNull(testList);
         assertEquals("1", testList.get(0).getId());
         assertEquals("testList", testList.get(0).getName());
         assertFalse(testList.get(0).isClosed());
+    }
+
+    @Test
+    public void testMapToListDtoWhenTrelloListIsEmpty() {
+        List<TrelloList> testTrelloList = new ArrayList<>();
+        List<TrelloListDto> testList = trelloMapper.mapToListDto(testTrelloList);
+
+        assertNotNull(testList);
+        assertTrue(testList.isEmpty());
     }
 
     @Test

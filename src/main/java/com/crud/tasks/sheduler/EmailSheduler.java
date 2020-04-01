@@ -31,7 +31,7 @@ public class EmailSheduler {
                 message(size)));
     }
 
-    private String message(long tempSize) {
+    public String message(long tempSize) {
         String messageIntroduction = "Currently in database you got: ";
         if(tempSize==1) {
             return messageIntroduction + tempSize + " task";
