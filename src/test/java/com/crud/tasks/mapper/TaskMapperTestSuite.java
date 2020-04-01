@@ -3,19 +3,13 @@ package com.crud.tasks.mapper;
 import com.crud.tasks.domain.Task;
 import com.crud.tasks.domain.TaskDto;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.junit.MockitoJUnitRunner;
 import java.util.ArrayList;
 import java.util.List;
-
 import static org.junit.Assert.assertEquals;
 
-@RunWith(MockitoJUnitRunner.class)
 public class TaskMapperTestSuite {
 
-    @InjectMocks
-    TaskMapper taskMapper;
+    private TaskMapper taskMapper = new TaskMapper();
 
     @Test
     public void testMapToTask() {
