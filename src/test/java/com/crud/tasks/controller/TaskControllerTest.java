@@ -1,7 +1,6 @@
 package com.crud.tasks.controller;
 
 import com.crud.tasks.domain.*;
-import com.crud.tasks.mapper.TaskMapper;
 import com.google.gson.Gson;
 import org.junit.Test;
 import org.junit.runner.RunWith;
