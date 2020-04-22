@@ -33,12 +33,31 @@ public class SimpleEmailService {
         }
     }
 
+    public void sendInfoOnceADay(final Mail mail) {
+        LOGGER.info("Creating info mail");
+        try {
+            javaMailSender.send(createInformationMail(mail));
+            LOGGER.info("Informmation has been send");
+        } catch (MailException e) {
+            LOGGER.error("Something went wrong... E-mail didn't send. Reason: ", e.getMessage(), e);
+        }
+    }
+
     private MimeMessagePreparator createMimeMessage(final Mail mail) {
         return mimeMessage -> {
             MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
             messageHelper.setTo(mail.getMailTo());
             messageHelper.setSubject(mail.getSubject());
             messageHelper.setText(mailCreatorService.buildTrelloCardEmail(mail.getMessage()), true);
+        };
+    }
+
+    private MimeMessagePreparator createInformationMail(final Mail mail) {
+        return mimeMessage -> {
+            MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
+            messageHelper.setTo(mail.getMailTo());
+            messageHelper.setSubject(mail.getSubject());
+            messageHelper.setText(mailCreatorService.buildInformationMail(mail.getMessage()), true);
         };
     }
 
