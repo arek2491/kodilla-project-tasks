@@ -40,7 +40,7 @@ public class TrelloControllerTest {
         List<TrelloBoardDto> trelloBoards = new ArrayList<>();
         when(trelloFacade.fetchTrelloBoards()).thenReturn(trelloBoards);
 
-        mockMvc.perform(get("/v1/trello/getTrelloBoards").contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get("/v1/trello/boards").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().is(200))
                 .andExpect(jsonPath("$", hasSize(0)));
     }
@@ -55,7 +55,7 @@ public class TrelloControllerTest {
 
         when(trelloFacade.fetchTrelloBoards()).thenReturn(trelloBoards);
 
-        mockMvc.perform(get("/v1/trello/getTrelloBoards").contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get("/v1/trello/boards").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].id", is("1")))
@@ -76,7 +76,7 @@ public class TrelloControllerTest {
         Gson gson = new Gson();
         String jsonContent = gson.toJson(trelloCardDto);
 
-        mockMvc.perform(post("/v1/trello/createTrelloCard").contentType(MediaType.APPLICATION_JSON)
+        mockMvc.perform(post("/v1/trello/cards").contentType(MediaType.APPLICATION_JSON)
         .characterEncoding("UTF-8")
         .content(jsonContent))
                 .andExpect(jsonPath("$.id", is("323")))
